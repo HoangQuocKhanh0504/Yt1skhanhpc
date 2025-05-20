@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Web tải video YouTube</title>
+  <link rel="icon" href="GD.png">
+<script src="https://www.google.com/recaptcha/api.js?render=6Le1rRYrAAAAAKt07uCfmbqyogPZGvZlUtomhKCX&hl=vi"></script>
+  <style>
+/* Reset và font */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px 25px 50px;
+  background: linear-gradient(135deg, #fff0f0, #ffe0e0);
+  color: #333;
+  text-align: center;
+  box-shadow:
+    0 10px 20px rgba(255, 0, 0, 0.12),
+    0 6px 6px rgba(255, 0, 0, 0.08);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow animation background */
+body::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255, 0, 0, 0.2), transparent 70%);
+  animation: glow 6s ease-in-out infinite alternate;
+  z-index: 0;
+  border-radius: 20px;
+}
+@keyframes glow {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.1) translate(20px, 20px);
+    opacity: 0.8;
+  }
+}
+
+h1 {
+  position: relative;
+  font-weight: 900;
+  font-size: 2.8rem;
+  color: #ff1a1a;
+  margin-bottom: 30px;
+  text-shadow:
+    0 0 6px #ff0000,
+    0 0 12px #ff4d4d,
+    0 0 20px #ff6666;
+  z-index: 1;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 16px 22px;
+  font-size: 20px;
+  border: 2.5px solid #ddd;
+  border-radius: 50px;
+  outline: none;
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.05);
+  transition:
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+input[type="text"]:focus {
+  border-color: #ff1a1a;
+  box-shadow: 0 0 15px #ff3333aa;
+  transform: scale(1.02);
+}
+
+button {
+  margin-top: 28px;
+  padding: 16px 48px;
+  font-size: 20px;
+  font-weight: 800;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #ff0000, #cc0000);
+  color: white;
+  cursor: pointer;
+  box-shadow:
+    0 6px 20px #ff1a1acc,
+    0 2px 8px #cc0000bb inset;
+  transition:
+    background 0.5s ease,
+    box-shadow 0.5s ease,
+    transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.25);
+  transform: skewX(-25deg) translateX(0);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: 50px;
+}
+button:hover {
+  background: linear-gradient(90deg, #cc0000, #ff0000);
+  box-shadow:
+    0 8px 30px #ff4d4dcc,
+    0 3px 12px #ff1a1aee inset;
+  transform: scale(1.05);
+}
+button:hover::before {
+  transform: skewX(-25deg) translateX(150%);
+}
+
+#info {
+  margin-top: 40px;
+  text-align: center;
+  border: 1.8px solid #ff9999;
+  padding: 30px 25px;
+  border-radius: 18px;
+  background: white;
+  box-shadow:
+    0 8px 30px rgba(255, 0, 0, 0.1);
+  min-height: 190px;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 1;
+}
+#info h3 {
+  color: #e60000;
+  margin-bottom: 18px;
+  font-weight: 900;
+  font-size: 24px;
+  text-shadow: 0 0 8px #ff6666;
+}
+#info p {
+  font-size: 17px;
+  margin: 8px 0;
+  line-height: 1.5;
+  color: #555;
+}
+#info img {
+  margin-top: 20px;
+  max-width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 6px 30px #ff6666bb;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+}
+#info img:hover {
+  transform: scale(1.08) rotate(1deg);
+  box-shadow: 0 8px 40px #ff4d4ddd;
+}
+
+a.btn {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 14px 38px;
+  background-color: #ff1a1a;
+  color: white;
+  font-weight: 800;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow:
+    0 6px 25px #ff3333cc;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+a.btn:hover {
+  background-color: #cc0000;
+  box-shadow:
+    0 8px 30px #ff4d4ddd;
+  transform: scale(1.08);
+}
+
+/* Loading animation kiểu thanh trượt màu đỏ */
+#loading {
+  margin-top: 40px;
+  font-family: monospace;
+  font-size: 22px;
+  letter-spacing: 4px;
+  color: #ff0000;
+  user-select: none;
+  display: none;
+  position: relative;
+  z-index: 1;
+}
+#loading p {
+  margin-top: 8px;
+  font-weight: 600;
+  color: #cc0000;
+  font-style: italic;
+  animation: loadingPulse 1.6s infinite ease-in-out;
+}
+
+/* Pulse animation cho loading text */
+@keyframes loadingPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+  </style>
+</head>
+<body>
+  <h1>Tải Video YouTube</h1>
+  <input id="video-url" type="text" placeholder="Dán link YouTube vào đây..." />
+  <br />
+  <button id="get-info">Lấy thông tin & tải</button>
+
+  <div id="loading">
+    <span id="loading-text">[ █▒▒▒▒▒▒▒▒▒ ]</span>
+    <p>Đang xử lý video từ YouTube...</p>
+  </div>
+
+  <div id="info"></div>
+
+  <script>
+    const input = document.getElementById("video-url");
+    const infoDiv = document.getElementById("info");
+    const loadingDiv = document.getElementById("loading");
+    const loadingText = document.getElementById("loading-text");
+
+    let loadingInterval;
+    let loadingDots = 1;
+
+    function startLoadingAnimation() {
+      loadingDots = 1;
+      loadingDiv.style.display = "block";
+
+      loadingInterval = setInterval(() => {
+        let bar = "";
+        for (let i = 0; i < 10; i++) {
+          bar += i < loadingDots ? "█" : "▒";
+        }
+        loadingText.textContent = `[ ${bar} ]`;
+        loadingDots++;
+        if (loadingDots > 10) loadingDots = 1;
+      }, 120);
+    }
+
+    function stopLoadingAnimation() {
+      clearInterval(loadingInterval);
+      loadingDiv.style.display = "none";
+    }
+
+    document.getElementById("get-info").addEventListener("click", async () => {
+      const url = input.value.trim();
+      if (!url) {
+        alert("Vui lòng nhập link YouTube hợp lệ.");
+        return;
+      }
+
+      infoDiv.innerHTML = "";
+      startLoadingAnimation();
+
+      try {
+        const res = await fetch(`/video-info?url=${encodeURIComponent(url)}`);
+        const data = await res.json();
+
+        if (data.error) throw new Error(data.error);
+
+        infoDiv.innerHTML = `
+          <h3>${data.title}</h3>
+          <p><strong>Kênh:</strong> ${data.channel}</p>
+          <img src="${data.thumbnail}" alt="Thumbnail video" />
+          <br />
+          <a href="${data.download}" class="btn" download>Tải video</a>
+        `;
+      } catch (err) {
+        infoDiv.innerHTML = `<p style="color: #cc0000;">❌ Lỗi: ${err.message}</p>`;
+      } finally {
+        stopLoadingAnimation();
+      }
+    });
+  </script>
+</body>
+</html>
